@@ -7,13 +7,16 @@ from torch.autograd import Variable
 import collections
 from torch.nn.parallel._functions import Gather
 
-__all__ = ['UserScatteredDataParallel', 'user_scattered_collate', 'async_copy_to']
+__all__ = ['UserScatteredDataParallel',
+           'user_scattered_collate', 'async_copy_to']
+
 
 def async_copy_to(obj, dev, main_stream=None):
     if torch.is_tensor(obj):
         obj = Variable(obj)
     if isinstance(obj, Variable):
-        v = obj.cuda(dev, async=True)
+        # v = obj.cuda(dev, async=True)
+        v = obj.cuda(dev, non_blocking=True)
         if main_stream is not None:
             v.data.record_stream(main_stream)
         return v
@@ -109,5 +112,6 @@ def _get_stream(device):
         return None
     if _streams is None:
         _streams = [None] * cuda.device_count()
-    if _streams[device] is None: _streams[device] = cuda.Stream(device)
+    if _streams[device] is None:
+        _streams[device] = cuda.Stream(device)
     return _streams[device]

@@ -4,7 +4,7 @@ from torch import Tensor
 
 
 # Data settings
-DATA_ROOT = '/path/to/VOC'
+DATA_ROOT = r'D:\dataset\segmentation\VOCtrainval_11-May-2012\VOCdevkit\VOC2012'
 MEAN = Tensor(np.array([0.485, 0.456, 0.406]))
 STD = Tensor(np.array([0.229, 0.224, 0.225]))
 SCALES = (0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0)
@@ -31,7 +31,7 @@ POLY_POWER = 0.9
 WEIGHT_DECAY = 1e-4
 
 DEVICE = 0
-DEVICES = list(range(0, 4))
+DEVICES = list(range(0, 2))
 
 LOG_DIR = './logdir' 
 MODEL_DIR = './models'
